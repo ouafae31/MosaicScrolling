@@ -1,79 +1,58 @@
 package com.app.scrollingmosaic;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by ouafaebenelkadi on 8/5/16.
  */
-public class MosaicAdapter extends BaseAdapter {
+public class MosaicAdapter extends RecyclerView.Adapter<MosaicAdapter.MosaicViewHolders> {
+
     private int [] imagesArray;
-    private LayoutInflater inflater;
-    private int [] imageId;
+    private Context context;
 
-    public MosaicAdapter(Context context,int[] prgmImages)
-    {
-        inflater = LayoutInflater.from(context);
-        imagesArray = prgmImages;
-        imageId=prgmImages;
-
+    public MosaicAdapter(Context context, int[]  itemList) {
+        this.imagesArray = itemList;
+        this.context = context;
     }
 
     @Override
-    public int getCount() {
-        // TODO Auto-generated method stub
+    public MosaicViewHolders onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, null);
+        MosaicViewHolders rcv = new MosaicViewHolders(layoutView);
+        return rcv;
+    }
+
+    @Override
+    public void onBindViewHolder(MosaicViewHolders holder, int position) {
+        holder.image.setImageResource(imagesArray[position]);
+    }
+
+    @Override
+    public int getItemCount() {
         return imagesArray.length;
     }
 
-    @Override
-    public Object getItem(int position) {
-        // TODO Auto-generated method stub
-        return position;
-    }
+    public class MosaicViewHolders extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    @Override
-    public long getItemId(int position) {
-        // TODO Auto-generated method stub
-        return position;
-    }
+        public ImageView image;
 
-    public class Holder
-    {
-        ImageView img;
-    }
-    @Override
-    public View getView(int position, View view, ViewGroup viewGroup)
-    {
-        View v = view;
-        ImageView picture;
-
-
-        if(v == null)
-        {
-            v = inflater.inflate(R.layout.list_item, viewGroup, false);
-            v.setTag(R.id.picture, v.findViewById(R.id.picture));
-            v.setTag(R.id.text, v.findViewById(R.id.text));
+        public MosaicViewHolders(View v) {
+            super(v);
+            v.setOnClickListener(this);
+            image = (ImageView) v.findViewById(R.id.mosaic_photo);
         }
 
-        picture = (ImageView)v.getTag(R.id.picture);
+        @Override
+        public void onClick(View view) {
 
-
-
-
-        picture.setImageResource(imageId[position]);
-
-
-        return v;
+        }
     }
-
-
-
 }
