@@ -8,56 +8,72 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by ouafaebenelkadi on 8/5/16.
  */
 public class MosaicAdapter extends BaseAdapter {
-        int [] imagesArray;
-        Context context;
-        int [] imageId;
-        private static LayoutInflater inflater=null;
-        public MosaicAdapter(MainActivity mainActivity, int[] prgmImages) {
-            // TODO Auto-generated constructor stub
-            imagesArray=prgmImages;
-            context=mainActivity;
-            imageId=prgmImages;
-            inflater = (LayoutInflater)context.
-                    getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        }
-        @Override
-        public int getCount() {
-            // TODO Auto-generated method stub
-            return imagesArray.length;
-        }
+    private int [] imagesArray;
+    private LayoutInflater inflater;
+    private int [] imageId;
 
-        @Override
-        public Object getItem(int position) {
-            // TODO Auto-generated method stub
-            return position;
-        }
+    public MosaicAdapter(Context context,int[] prgmImages)
+    {
+        inflater = LayoutInflater.from(context);
+        imagesArray = prgmImages;
+        imageId=prgmImages;
 
-        @Override
-        public long getItemId(int position) {
-            // TODO Auto-generated method stub
-            return position;
-        }
+    }
 
-        public class Holder
+    @Override
+    public int getCount() {
+        // TODO Auto-generated method stub
+        return imagesArray.length;
+    }
+
+    @Override
+    public Object getItem(int position) {
+        // TODO Auto-generated method stub
+        return position;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        // TODO Auto-generated method stub
+        return position;
+    }
+
+    public class Holder
+    {
+        ImageView img;
+    }
+    @Override
+    public View getView(int position, View view, ViewGroup viewGroup)
+    {
+        View v = view;
+        ImageView picture;
+
+
+        if(v == null)
         {
-            TextView tv;
-            ImageView img;
+            v = inflater.inflate(R.layout.list_item, viewGroup, false);
+            v.setTag(R.id.picture, v.findViewById(R.id.picture));
+            v.setTag(R.id.text, v.findViewById(R.id.text));
         }
-        @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
-            // TODO Auto-generated method stub
-            Holder holder=new Holder();
-            View rowView;
-            rowView = inflater.inflate(R.layout.list_item, null);
-            holder.img=(ImageView) rowView.findViewById(R.id.imageView);
-            holder.img.setImageResource(imageId[position]);
 
-            return rowView;
-        }
+        picture = (ImageView)v.getTag(R.id.picture);
+
+
+
+
+        picture.setImageResource(imageId[position]);
+
+
+        return v;
+    }
+
 
 
 }
